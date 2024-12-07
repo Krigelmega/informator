@@ -26,6 +26,7 @@ def main():
     accountAPI = Account.AccountAPI(api_key3, secret_key3, passphrase3, False, flag)
     accountAPI_sem = Account.AccountAPI(api_key4, secret_key4, passphrase4, False, flag)
     result = accountAPI.get_account_balance()
+    print(result)
     result_sem = accountAPI_sem.get_account_balance()
     print(result_sem)
     result_okx = result['data'][0]
