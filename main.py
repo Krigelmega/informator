@@ -5,7 +5,6 @@ from flask import Flask
 from pybit.unified_trading import HTTP
 import okx.Account as Account
 import concurrent.futures
-from threading import Thread
 
 
 api_key = 'UIVxrdbrHubkUoumq3'
@@ -26,9 +25,7 @@ def main():
     accountAPI = Account.AccountAPI(api_key3, secret_key3, passphrase3, False, flag)
     accountAPI_sem = Account.AccountAPI(api_key4, secret_key4, passphrase4, False, flag)
     result = accountAPI.get_account_balance()
-    print(result)
-    result_sem = accountAPI_sem.get_account_balance()
-    print(result_sem)
+    #result_sem = accountAPI_sem.get_account_balance()
     result_okx = result['data'][0]
     #result_okx_sem = result_sem['data'][0]
 
@@ -67,9 +64,7 @@ def main():
     #pl4 = round(float(mama4['upl']), 3)
 
 
-    return (round(total_usd_summ + (abs(pl if pl < 0 else 0)), 2),
-            round(total_usd_summ2 + (abs(pl2 if pl2 < 0 else 0)), 2),
-            round((total_usd_summ3 + (abs(pl3 if pl3 < 0 else 0))), 2),)
+    return f'{round(total_usd_summ + (abs(pl if pl < 0 else 0)), 2)};{round(total_usd_summ2 + (abs(pl2 if pl2 < 0 else 0)), 2)};{round((total_usd_summ3 + (abs(pl3 if pl3 < 0 else 0))), 2)}'
             #round((total_usd_summ4 + (abs(pl4 if pl4 < 0 else 0))), 2)
 
 
@@ -79,9 +74,8 @@ app = Flask(__name__)
 def hello_world():
     try:
         return main()
-    except:
+    except Exception as e:
+        print(e)
         return 'None'
-def mainn():
-    app.run(host='0.0.0.0', port=8080)
-t = Thread (target=mainn)
-t.start()
+
+app.run(host='0.0.0.0', port=8080)
