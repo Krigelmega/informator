@@ -19,8 +19,8 @@ def main():
     api_key3 = "1a99a7d8-2a20-4b60-8fc4-23533c4c1944"
     secret_key3 = "394FEE3C7EACBE51680896451B139187"
     passphrase3 = "784512Zz."
-    api_key4 = '227f1809-f195-430d-bfad-9d3cc4d1d20a'
-    secret_key4 = 'D9D9AAD31266397B1CBA40CBDB521778'
+    api_key4 = 'b73ea002-1fd2-4620-b2ab-1022b79e3777'
+    secret_key4 = '1ACA55BD8DCD57D6437EE0249B5D2BC1'
     passphrase4 = '>y]3SrrE64xzd/=Eb/d8Wospk'
     flag = "0"  # live trading: 0, demo trading: 1
     
