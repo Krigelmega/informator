@@ -117,23 +117,12 @@ def main():
     okx.append([symbols_now_okx_sem, order_volume_okx_sem, buy_price_okx_sem, market_price_now_okx_sem, pnl_okx_sem])
     all = str([bb, okx])
 
-    def get_balance(session):
-        return session.get_wallet_balance(accountType='UNIFIED', recv_window=10000,
-                                          timeout=30)  # Increased timeout to 30 seconds
-
-    def fetch_balance_info():
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            # Running both API calls concurrently
-            futures = [executor.submit(get_balance, session), executor.submit(get_balance, session_sem)]
-            results = [future.result() for future in concurrent.futures.as_completed(futures)]
-        return results
-
-    # Fetch balance info concurrently
-    balance_info = fetch_balance_info()
+    balance_info = session.get_wallet_balance(accountType='UNIFIED', recv_window=10000,timeout=30)  # Increased timeout to 30 seconds
+    balance_info2 = session_sem.get_wallet_balance(accountType='UNIFIED', recv_window=10000,timeout=30)  # Increased timeout to 30 seconds
 
     # Extracting the relevant data for each account
     all_info_balance = balance_info[0]
-    all_info_balance2 = balance_info[1]
+    all_info_balance2 = balance_info2[0]
 
     mama = all_info_balance['result']['list'][0]
     mama2 = all_info_balance2['result']['list'][0]
