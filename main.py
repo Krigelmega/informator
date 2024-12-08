@@ -120,12 +120,8 @@ def main():
     balance_info = session.get_wallet_balance(accountType='UNIFIED', recv_window=10000,timeout=30)  # Increased timeout to 30 seconds
     balance_info2 = session_sem.get_wallet_balance(accountType='UNIFIED', recv_window=10000,timeout=30)  # Increased timeout to 30 seconds
 
-    # Extracting the relevant data for each account
-    all_info_balance = balance_info[0]
-    all_info_balance2 = balance_info2[0]
-
-    mama = all_info_balance['result']['list'][0]
-    mama2 = all_info_balance2['result']['list'][0]
+    mama = balance_info['result']['list'][0]
+    mama2 = balance_info2['result']['list'][0]
     mama3 = result_okx['details'][0]
     mama4 = result_okx_sem['details'][0]
 
