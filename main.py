@@ -18,16 +18,16 @@ def main():
     api_key3 = "1a99a7d8-2a20-4b60-8fc4-23533c4c1944"
     secret_key3 = "394FEE3C7EACBE51680896451B139187"
     passphrase3 = "784512Zz."
-    api_key4 = '227f1809-f195-430d-bfad-9d3cc4d1d20a'
-    secret_key4 = 'D9D9AAD31266397B1CBA40CBDB521778'
+    api_key4 = 'b73ea002-1fd2-4620-b2ab-1022b79e3777'
+    secret_key4 = '1ACA55BD8DCD57D6437EE0249B5D2BC1'
     passphrase4 = '>y]3SrrE64xzd/=Eb/d8Wospk'
     flag = "0"  # live trading: 0, demo trading: 1
     accountAPI = Account.AccountAPI(api_key3, secret_key3, passphrase3, False, flag)
     accountAPI_sem = Account.AccountAPI(api_key4, secret_key4, passphrase4, False, flag)
     result = accountAPI.get_account_balance()
-    #result_sem = accountAPI_sem.get_account_balance()
+    result_sem = accountAPI_sem.get_account_balance()
     result_okx = result['data'][0]
-    #result_okx_sem = result_sem['data'][0]
+    result_okx_sem = result_sem['data'][0]
 
     def get_balance(session):
         return session.get_wallet_balance(accountType='UNIFIED', recv_window=10000,
@@ -50,22 +50,21 @@ def main():
     mama = all_info_balance['result']['list'][0]
     mama2 = all_info_balance2['result']['list'][0]
     mama3 = result_okx['details'][0]
-    #mama4 = result_okx_sem['details'][0]
+    mama4 = result_okx_sem['details'][0]
 
     # Process balances and other metrics
     total_usd_summ = round(float(mama['totalEquity']), 2)
     total_usd_summ2 = round(float(mama2['totalEquity']), 2)
     total_usd_summ3 = round(float(result_okx['totalEq'].replace(',', '').replace(' ', '').replace('\xa0', '')))
-    #total_usd_summ4 = round(float(result_okx_sem['totalEq'].replace(',', '').replace(' ', '').replace('\xa0', '')))
+    total_usd_summ4 = round(float(result_okx_sem['totalEq'].replace(',', '').replace(' ', '').replace('\xa0', '')))
 
     pl = round(float(mama['totalPerpUPL']), 3)
     pl2 = round(float(mama2['totalPerpUPL']), 3)
     pl3 = round(float(mama3['upl']), 3)
-    #pl4 = round(float(mama4['upl']), 3)
+    pl4 = round(float(mama4['upl']), 3)
 
 
-    return f'{round(total_usd_summ + (abs(pl if pl < 0 else 0)), 2)};{round(total_usd_summ2 + (abs(pl2 if pl2 < 0 else 0)), 2)};{round((total_usd_summ3 + (abs(pl3 if pl3 < 0 else 0))), 2)}'
-            #round((total_usd_summ4 + (abs(pl4 if pl4 < 0 else 0))), 2)
+    return f'{round(total_usd_summ + (abs(pl if pl < 0 else 0)), 2)};{round(total_usd_summ2 + (abs(pl2 if pl2 < 0 else 0)), 2)};{round((total_usd_summ3 + (abs(pl3 if pl3 < 0 else 0))), 2)};{round((total_usd_summ4 + (abs(pl4 if pl4 < 0 else 0))), 2)}'
 
 
 app = Flask(__name__)
