@@ -64,7 +64,7 @@ def main():
     pl4 = round(float(mama4['upl']), 3)
 
 
-    return f'{round(total_usd_summ + (abs(pl if pl < 0 else 0)), 2)};{round(total_usd_summ2 + (abs(pl2 if pl2 < 0 else 0)), 2)};{round((total_usd_summ3 + (abs(pl3 if pl3 < 0 else 0))), 2)};{round((total_usd_summ4 + (abs(pl4 if pl4 < 0 else 0))), 2)}'
+    return f'{int(round(total_usd_summ + (abs(pl if pl < 0 else 0)), 2))};{int(round(total_usd_summ2 + (abs(pl2 if pl2 < 0 else 0)), 2))};{int(round((total_usd_summ3 + (abs(pl3 if pl3 < 0 else 0))), 2))};{int(round((total_usd_summ4 + (abs(pl4 if pl4 < 0 else 0))), 2))}'
 
 
 app = Flask(__name__)
