@@ -109,7 +109,7 @@ def main():
     open_time_bb_sem = []
     edit_time_bb_sem = []
     
-        for position in posi_bb:
+    for position in posi_bb:
         symbols_now_bb_vic.append(position['symbol'][:-4])
         order_volume_bb_vic.append(int(float(position['positionValue'])))
         buy_price_bb_vic.append(position['avgPrice'][:10])
