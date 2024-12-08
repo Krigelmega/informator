@@ -159,6 +159,6 @@ def hello_world():
         return main()
     except Exception as e:
         print(e)
-        return 'None'
+        return str(e)
 
 app.run(host='0.0.0.0', port=8080)
