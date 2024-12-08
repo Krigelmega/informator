@@ -6,6 +6,7 @@ from pybit.unified_trading import HTTP
 import okx.Account as Account
 import concurrent.futures
 import logging
+import pytz
 
 api_key = 'UIVxrdbrHubkUoumq3'
 api_secret = 'fCr4EFilGlH2EWwSq1L30fOQ4mlSXjcPgPcY'
@@ -52,12 +53,18 @@ def main():
     buy_price_okx_vic = []
     market_price_now_okx_vic = []
     pnl_okx_vic = []
+    open_time_okx_vic = []
+    edit_time_okx_vic = []
 
     symbols_now_okx_sem = []
     order_volume_okx_sem = []
     buy_price_okx_sem = []
     market_price_now_okx_sem = []
     pnl_okx_sem = []
+    open_time_okx_sem = []
+    edit_time_okx_sem = []
+
+    vladivostok_tz = pytz.timezone('Asia/Vladivostok')
 
     for market_position in list_of_pos:
         symbols_now_okx_vic.append(market_position['instId'].split('-')[0])
@@ -65,6 +72,8 @@ def main():
         buy_price_okx_vic.append(market_position['avgPx'][:10])
         market_price_now_okx_vic.append(market_position['markPx'][:10])
         pnl_okx_vic.append(market_position['uplLastPx'][:5])
+        open_time_okx_vic.append(datetime.fromtimestamp(int(market_position['cTime']) if int(market_position['cTime']) <= 1e12 else (int(market_position['cTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
+        edit_time_okx_vic.append(datetime.fromtimestamp(int(market_position['uTime']) if int(market_position['uTime']) <= 1e12 else (int(market_position['uTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
 
     for market_position in pos_sem:
         symbols_now_okx_sem.append(market_position['instId'].split('-')[0])
@@ -72,7 +81,8 @@ def main():
         buy_price_okx_sem.append(market_position['avgPx'][:10])
         market_price_now_okx_sem.append(market_position['markPx'][:10])
         pnl_okx_sem.append(market_position['uplLastPx'][:5])
-
+        open_time_okx_sem.append(datetime.fromtimestamp(int(market_position['cTime']) if int(market_position['cTime']) <= 1e12 else (int(market_position['cTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
+        edit_time_okx_sem.append(datetime.fromtimestamp(int(market_position['uTime']) if int(market_position['uTime']) <= 1e12 else (int(market_position['uTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
 
     posi_bb = session.get_positions(category='linear', settleCoin='USDT')
     posi_bb_sem = session_sem.get_positions(category='linear', settleCoin='USDT')
@@ -88,19 +98,25 @@ def main():
     buy_price_bb_vic = []
     market_price_now_bb_vic = []
     pnl_bb_vic = []
+    open_time_bb_vic = []
+    edit_time_bb_vic = []
 
     symbols_now_bb_sem = []
     order_volume_bb_sem = []
     buy_price_bb_sem = []
     market_price_now_bb_sem = []
     pnl_bb_sem = []
+    open_time_bb_sem = []
+    edit_time_bb_sem = []
     
-    for position in posi_bb:
+        for position in posi_bb:
         symbols_now_bb_vic.append(position['symbol'][:-4])
         order_volume_bb_vic.append(int(float(position['positionValue'])))
         buy_price_bb_vic.append(position['avgPrice'][:10])
         market_price_now_bb_vic.append(position['markPrice'][:10])
         pnl_bb_vic.append(position['unrealisedPnl'][:5])
+        open_time_bb_vic.append(datetime.fromtimestamp(int(position['createdTime']) if int(position['createdTime']) <= 1e12 else (int(position['createdTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
+        edit_time_bb_vic.append(datetime.fromtimestamp(int(position['updatedTime']) if int(position['updatedTime']) <= 1e12 else (int(position['updatedTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
         
     for position in posi_bb_sem:
         symbols_now_bb_sem.append(position['symbol'][:-4])
@@ -108,13 +124,15 @@ def main():
         buy_price_bb_sem.append(position['avgPrice'][:10])
         market_price_now_bb_sem.append(position['markPrice'][:10])
         pnl_bb_sem.append(position['unrealisedPnl'][:5])
+        open_time_bb_sem.append(datetime.fromtimestamp(int(position['createdTime']) if int(position['createdTime']) <= 1e12 else (int(position['createdTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
+        edit_time_bb_sem.append(datetime.fromtimestamp(int(position['updatedTime']) if int(position['updatedTime']) <= 1e12 else (int(position['updatedTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
 
     bb = []
-    bb.append([symbols_now_bb_vic, order_volume_bb_vic, buy_price_bb_vic, market_price_now_bb_vic, pnl_bb_vic])
-    bb.append([symbols_now_bb_sem, order_volume_bb_sem, buy_price_bb_sem, market_price_now_bb_sem, pnl_bb_sem])
+    bb.append([symbols_now_bb_vic, order_volume_bb_vic, buy_price_bb_vic, market_price_now_bb_vic, pnl_bb_vic, open_time_bb_vic, edit_time_bb_vic])
+    bb.append([symbols_now_bb_sem, order_volume_bb_sem, buy_price_bb_sem, market_price_now_bb_sem, pnl_bb_sem, open_time_bb_sem, edit_time_bb_sem])
     okx = []
-    okx.append([symbols_now_okx_vic, order_volume_okx_vic, buy_price_okx_vic, market_price_now_okx_vic, pnl_okx_vic])
-    okx.append([symbols_now_okx_sem, order_volume_okx_sem, buy_price_okx_sem, market_price_now_okx_sem, pnl_okx_sem])
+    okx.append([symbols_now_okx_vic, order_volume_okx_vic, buy_price_okx_vic, market_price_now_okx_vic, pnl_okx_vic, open_time_okx_vic, edit_time_okx_vic])
+    okx.append([symbols_now_okx_sem, order_volume_okx_sem, buy_price_okx_sem, market_price_now_okx_sem, pnl_okx_sem, open_time_okx_sem, edit_time_okx_sem])
     all = str([bb, okx])
 
     balance_info = session.get_wallet_balance(accountType='UNIFIED', recv_window=10000,timeout=30)  # Increased timeout to 30 seconds
