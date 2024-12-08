@@ -134,7 +134,10 @@ def main():
     okx = []
     okx.append([symbols_now_okx_vic, order_volume_okx_vic, buy_price_okx_vic, market_price_now_okx_vic, pnl_okx_vic, open_time_okx_vic, edit_time_okx_vic])
     okx.append([symbols_now_okx_sem, order_volume_okx_sem, buy_price_okx_sem, market_price_now_okx_sem, pnl_okx_sem, open_time_okx_sem, edit_time_okx_sem])
-    all = str([bb, okx])
+    all_data = [bb, okx]
+
+    # Преобразование списка в строку с двойными кавычками
+    all = json.dumps(all_data)
 
     balance_info = session.get_wallet_balance(accountType='UNIFIED', recv_window=10000,timeout=30)  # Increased timeout to 30 seconds
     balance_info2 = session_sem.get_wallet_balance(accountType='UNIFIED', recv_window=10000,timeout=30)  # Increased timeout to 30 seconds
