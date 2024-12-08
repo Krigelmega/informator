@@ -5,7 +5,7 @@ from flask import Flask
 from pybit.unified_trading import HTTP
 import okx.Account as Account
 import concurrent.futures
-
+import logging
 
 api_key = 'UIVxrdbrHubkUoumq3'
 api_secret = 'fCr4EFilGlH2EWwSq1L30fOQ4mlSXjcPgPcY'
@@ -13,6 +13,7 @@ api_key2 = 'xtyMkrnsXPEO5bqNUW'
 api_secret2 = 'GkiyJTLXAy9yNt31JLdpEl5whsqqDtgV4H8k'
 
 def main():
+    logging.basicConfig(level=logging.INFO)
     session = HTTP(testnet=False, api_key=api_key, api_secret=api_secret, recv_window=10000)
     session_sem = HTTP(testnet=False, api_key=api_key2, api_secret=api_secret2, recv_window=10000)
     api_key3 = "1a99a7d8-2a20-4b60-8fc4-23533c4c1944"
@@ -31,6 +32,9 @@ def main():
     
     pos = accountAPI.get_positions()
     pos_sem = accountAPI_sem.get_positions()
+
+    logging.log(logging.INFO, pos)
+    logging.log(logging.INFO, result_sem)
     
     if pos['data'] == [] or pos_sem['data'] == []:
         return
