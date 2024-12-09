@@ -73,7 +73,7 @@ def main():
         order_volume_okx_vic.append(int(float(market_position['notionalUsd'])))
         buy_price_okx_vic.append(market_position['avgPx'][:10])
         market_price_now_okx_vic.append(market_position['markPx'][:10])
-        pnl_okx_vic.append(market_position['uplLastPx'][:5])
+        pnl_okx_vic.append(round(float(market_position['uplLastPx']), 2))
         open_time_okx_vic.append(datetime.fromtimestamp(int(market_position['cTime']) if int(market_position['cTime']) <= 1e12 else (int(market_position['cTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
         edit_time_okx_vic.append(datetime.fromtimestamp(int(market_position['uTime']) if int(market_position['uTime']) <= 1e12 else (int(market_position['uTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
 
@@ -82,7 +82,7 @@ def main():
         order_volume_okx_sem.append(int(float(market_position['notionalUsd'])))
         buy_price_okx_sem.append(market_position['avgPx'][:10])
         market_price_now_okx_sem.append(market_position['markPx'][:10])
-        pnl_okx_sem.append(market_position['uplLastPx'][:5])
+        pnl_okx_sem.append(round(float(market_position['uplLastPx']), 2))
         open_time_okx_sem.append(datetime.fromtimestamp(int(market_position['cTime']) if int(market_position['cTime']) <= 1e12 else (int(market_position['cTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
         edit_time_okx_sem.append(datetime.fromtimestamp(int(market_position['uTime']) if int(market_position['uTime']) <= 1e12 else (int(market_position['uTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
 
