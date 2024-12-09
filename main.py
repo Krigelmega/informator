@@ -116,7 +116,7 @@ def main():
         order_volume_bb_vic.append(int(float(position['positionValue'])))
         buy_price_bb_vic.append(position['avgPrice'][:10])
         market_price_now_bb_vic.append(position['markPrice'][:10])
-        pnl_bb_vic.append(position['unrealisedPnl'][:5])
+        pnl_bb_vic.append(round(float(position['unrealisedPnl']), 2))
         open_time_bb_vic.append(datetime.fromtimestamp(int(position['createdTime']) if int(position['createdTime']) <= 1e12 else (int(position['createdTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
         edit_time_bb_vic.append(datetime.fromtimestamp(int(position['updatedTime']) if int(position['updatedTime']) <= 1e12 else (int(position['updatedTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
         
@@ -125,7 +125,7 @@ def main():
         order_volume_bb_sem.append(int(float(position['positionValue'])))
         buy_price_bb_sem.append(position['avgPrice'][:10])
         market_price_now_bb_sem.append(position['markPrice'][:10])
-        pnl_bb_sem.append(position['unrealisedPnl'][:5])
+        pnl_bb_sem.append(round(float(position['unrealisedPnl']), 2))
         open_time_bb_sem.append(datetime.fromtimestamp(int(position['createdTime']) if int(position['createdTime']) <= 1e12 else (int(position['createdTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
         edit_time_bb_sem.append(datetime.fromtimestamp(int(position['updatedTime']) if int(position['updatedTime']) <= 1e12 else (int(position['updatedTime']) / 1000), tz=vladivostok_tz).strftime("%Y.%m.%d %H:%M"))
 
