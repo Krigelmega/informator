@@ -1,3 +1,12 @@
+from flask import Flask
+from pybit.unified_trading import HTTP
+import okx.Account as Account
+import concurrent.futures
+import logging
+import pytz
+import json
+from datetime import datetime
+
 api_key = 'UIVxrdbrHubkUoumq3'
 api_secret = 'fCr4EFilGlH2EWwSq1L30fOQ4mlSXjcPgPcY'
 api_key2 = 'nNpYlOeQ7Kh3OUOkSk'
@@ -156,3 +165,16 @@ def main():
 
 
     return f'{int(round(total_usd_summ + (abs(pl if pl < 0 else 0)), 2))};{int(round(total_usd_summ2 + (abs(pl2 if pl2 < 0 else 0)), 2))};0;0'
+
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    try:
+        return main()
+    except Exception as e:
+        print(e)
+        return str(e)
+
+app.run(host='0.0.0.0', port=8080)
